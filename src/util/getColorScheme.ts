@@ -43,7 +43,7 @@ const colorSchemes = [
     state: 'early_night',
     background_main: 'rgb(41, 41, 101)',
     background_secondary: 'rgb(77, 77, 136)',
-    text_primary: 'rgb14, 14, 29)',
+    text_primary: 'rgb(14, 14, 29)',
     text_header: 'rgb(13, 13, 61)',
     text_info: 'rgb(2, 2, 28)',
   }
