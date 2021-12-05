@@ -136,9 +136,8 @@ export const WeatherPage: React.FC = () => {
           colorScheme={colorScheme}
         />
         <DateInfo
-          timezone={weatherData?.timezone !== undefined ? weatherData.timezone : 0}
           colorScheme={colorScheme}
-          datee={date !== undefined ? date : new Date()}
+          dateInitial={date !== undefined ? date : new Date()}
         />
         <WeatherInfo
           cloudiness={weatherData?.clouds.all !== undefined ? weatherData.clouds.all : ''}

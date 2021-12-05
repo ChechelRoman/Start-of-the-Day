@@ -5,16 +5,15 @@ import { InfoItem } from "../InfoItem";
 import { ColorScheme } from '../../util/getColorScheme'
 
 type DateInfoProps = {
-  timezone: number;
   colorScheme: ColorScheme | undefined;
-  datee: Date;
+  dateInitial: Date;
 };
 
-export const DateInfo: React.FC<DateInfoProps> = ({ timezone, colorScheme, datee }) => {
-  const [date, setDate] = useState(datee)
+export const DateInfo: React.FC<DateInfoProps> = ({ colorScheme, dateInitial }) => {
+  const [date, setDate] = useState<Date>(dateInitial)
 
   useEffect(() => {
-    const timer = setInterval(() => setDate(new Date(date?.getTime() + 1000)), 1000);
+    const timer = setInterval(() => setDate(new Date(date.getTime() + 1000)), 1000);
 
     return function cleanup() {
       clearInterval(timer);
@@ -25,12 +24,12 @@ export const DateInfo: React.FC<DateInfoProps> = ({ timezone, colorScheme, datee
     <View style={[styles.container, { backgroundColor: colorScheme?.background_secondary }]}>
       <InfoItem
         header={'TIME'}
-        info={date?.toTimeString().substring(0, 8)}
+        info={date.toTimeString().substring(0, 8)}
         colorScheme={colorScheme}
       />
       <InfoItem
         header={'DATE'}
-        info={date?.toString().substring(4, 15)}
+        info={date.toString().substring(4, 15)}
         colorScheme={colorScheme}
       />
     </View>
