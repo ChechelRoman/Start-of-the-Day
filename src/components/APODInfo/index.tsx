@@ -1,22 +1,24 @@
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
+import { ColorScheme } from '../../util/getColorScheme'
 
 type APPODInfoProps = {
-  explanation: string | undefined;
-  title: string | undefined;
-  url: string | undefined;
+  explanation: string;
+  title: string;
+  url: string;
+  colorScheme: ColorScheme | undefined;
 };
 
-export const APPODInfo: React.FC<APPODInfoProps> = ({ explanation, title, url }) => {
+export const APPODInfo: React.FC<APPODInfoProps> = ({ explanation, title, url, colorScheme }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Astronomy Picture of the Day</Text>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.header, { color: colorScheme?.text_primary }]}>Astronomy Picture of the Day</Text>
+      <Text style={[styles.title, { color: colorScheme?.text_primary }]}>{title}</Text>
       <Image
         style={styles.image}
         source={{uri: `${url}`}}
       />
-      <Text style={styles.explanation}>{explanation}</Text>
+      <Text style={[styles.explanation, { color: colorScheme?.text_primary }]}>{explanation}</Text>
     </View>
   );
 };
@@ -25,16 +27,15 @@ const styles = StyleSheet.create({
   container: {
     marginTop: '5%',
     width: '90%',
+    alignSelf: "center",
   },
   header: {
     textAlign: "center",
-    color: 'rgb(42, 96, 137)',
     fontSize: 20,
     paddingBottom: 10,
   },
   title: {
     textAlign: "center",
-    color: 'rgb(42, 96, 137)',
     paddingBottom: 10,
   },
   image: {
@@ -47,6 +48,6 @@ const styles = StyleSheet.create({
   explanation: {
     alignSelf: "center",
     textAlign: "justify",
-    color: 'rgb(42, 96, 137)',
+    marginBottom: 20,
   }
 });
