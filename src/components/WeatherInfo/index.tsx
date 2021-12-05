@@ -1,28 +1,33 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
+import { InfoItem } from "../InfoItem";
+import { ColorScheme } from '../../util/getColorScheme'
 
 type WeatherInfoProps = {
-  cloudiness: number | undefined;
-  wind_speed: number | undefined;
-  humidity: number | undefined;
-
+  cloudiness: number | string;
+  wind_speed: number | string;
+  humidity: number | string;
+  colorScheme: ColorScheme  | undefined;
 }
 
-export const WeatherInfo: React.FC<WeatherInfoProps> = ({ cloudiness, wind_speed, humidity }) => {
+export const WeatherInfo: React.FC<WeatherInfoProps> = ({ cloudiness, wind_speed, humidity, colorScheme }) => {
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.header}>CLOUDINESS</Text>
-        <Text style={styles.info}>{cloudiness}</Text>
-      </View>
-      <View>
-        <Text style={styles.header}>WIND SPEED</Text>
-        <Text style={styles.info}>{wind_speed}</Text>
-      </View>
-      <View>
-        <Text style={styles.header}>HUMIDITY</Text>
-        <Text style={styles.info}>{humidity}</Text>
-      </View>
+    <View style={[styles.container, { backgroundColor: colorScheme?.background_secondary }]}>
+      <InfoItem
+        header={'CLOUDINESS'}
+        info={`${cloudiness}%`}
+        colorScheme={colorScheme}
+      />
+      <InfoItem
+        header={'WIND SPEED'}
+        info={`${wind_speed} m/s`}
+        colorScheme={colorScheme}
+      />
+      <InfoItem
+        header={'HUMIDITY'}
+        info={`${humidity}%`}
+        colorScheme={colorScheme}
+      />
     </View>
   );
 };
@@ -33,18 +38,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: '80%',
-    backgroundColor: 'rgb(253, 252, 252)',
     borderRadius: 12,
     marginTop: '3%',
+    alignSelf: "center",
   },
-  header: {
-    textAlign: "center",
-    color: 'rgb(196, 196, 196)',
-    paddingTop: 10,
-  },
-  info: {
-    textAlign: "center",
-    color: 'rgb(139, 139, 139)',
-    paddingBottom: 10,
-  }
 });
