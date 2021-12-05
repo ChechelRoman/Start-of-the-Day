@@ -1,23 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { InfoItem } from "../InfoItem";
+import { ColorScheme } from '../../util/getColorScheme'
 
 type DateInfoProps = {
-  timezone: number | undefined;
+  timezone: number;
+  colorScheme: ColorScheme | undefined;
+  datee: Date;
 };
 
-export const DateInfo: React.FC<DateInfoProps> = ({ timezone }) => {
-  const [date, setDate] = useState<Date>();
-  const newDate = new Date();
-  let timezoneInMiliSeconds = 0;
-
-  if (timezone !== undefined) {
-    timezoneInMiliSeconds = timezone * 1000;
-  }
+export const DateInfo: React.FC<DateInfoProps> = ({ timezone, colorScheme, datee }) => {
+  const [date, setDate] = useState(datee)
 
   useEffect(() => {
-    setDate(new Date((newDate.getTime() + newDate.getTimezoneOffset() * 60000) + timezoneInMiliSeconds));
-    const timer = setInterval(() => setDate(new Date((newDate.getTime() + newDate.getTimezoneOffset() * 60000) + timezoneInMiliSeconds)), 1000);
+    const timer = setInterval(() => setDate(new Date(date?.getTime() + 1000)), 1000);
 
     return function cleanup() {
       clearInterval(timer);
@@ -25,15 +22,17 @@ export const DateInfo: React.FC<DateInfoProps> = ({ timezone }) => {
   }, [date]);
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.header}>TIME</Text>
-        <Text style={styles.info}>{date?.toTimeString().substring(0, 8)}</Text>
-      </View>
-      <View>
-        <Text style={styles.header}>DATE</Text>
-        <Text style={styles.info}>{date?.toString().substring(4, 15)}</Text>
-      </View>
+    <View style={[styles.container, { backgroundColor: colorScheme?.background_secondary }]}>
+      <InfoItem
+        header={'TIME'}
+        info={date?.toTimeString().substring(0, 8)}
+        colorScheme={colorScheme}
+      />
+      <InfoItem
+        header={'DATE'}
+        info={date?.toString().substring(4, 15)}
+        colorScheme={colorScheme}
+      />
     </View>
   );
 };
@@ -44,17 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: '80%',
-    backgroundColor: 'rgb(253, 252, 252)',
     borderRadius: 12,
+    alignSelf: "center",
   },
-  header: {
-    textAlign: "center",
-    color: 'rgb(196, 196, 196)',
-    paddingTop: 10,
-  },
-  info: {
-    textAlign: "center",
-    color: 'rgb(139, 139, 139)',
-    paddingBottom: 10,
-  }
 });
